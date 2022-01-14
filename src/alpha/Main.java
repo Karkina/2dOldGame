@@ -115,9 +115,13 @@ public class Main extends Application{
       }
     });
     stage.show();
-    
     timer = new AnimationTimer() {
       @Override public void handle(long l) {
+        if(data.getScore() < 0) {
+          System.out.println(data.getScore());
+          ((Viewer)viewer).getPopUp().show(stage);
+          engine.stop();
+        }
         scene.setRoot(((Viewer)viewer).getPanel(stage));
         switch (data.getSoundEffect()){
           case PhantomDestroyed:

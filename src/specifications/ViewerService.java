@@ -7,10 +7,12 @@
 package specifications;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.stage.Popup;
 
 public interface ViewerService{
   public void init();
   public Parent getPanel(Stage stage);
+  public Popup getPopUp();
   public void setMainWindowWidth(double w);
   public void setMainWindowHeight(double h);
 }

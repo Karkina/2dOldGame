@@ -17,6 +17,8 @@ public interface ReadService {
   public double getHeroesHeight();
   public double getPhantomWidth();
   public double getPhantomHeight();
+  public double getPilierWidth();
+  public double getPilierHeight();
   public int getStepNumber();
   public int getScore();
   public ArrayList<PhantomService> getPhantoms();

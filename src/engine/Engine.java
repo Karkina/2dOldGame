@@ -49,10 +49,10 @@ public class Engine implements EngineService, RequireDataService{
     engineClock = new Timer();
     command = User.COMMAND.NONE;
     gen = new Random();
-    data.addPilier(new Position(70,400));
+    data.addPilier(new Position(300,400));
     data.addPilier(new Position(500,150));
     data.addPilier(new Position(250,20));
-    data.addPilier(new Position(90,175));
+    data.addPilier(new Position(650,175));
     moveLeft = false;
     moveRight = false;
     moveUp = false;
@@ -92,6 +92,17 @@ public class Engine implements EngineService, RequireDataService{
             if (p.getPosition().x>0) phantoms.add(p);
           }
         }
+
+        for (PilierService p : data.getPiliers()) {
+
+          if (collisionHeroesPilliersTest(p)){
+            data.setSoundEffect(Sound.SOUND.HeroesGotHit);
+            System.out.println("Aie le pilier");
+            score+=10;
+          }
+        }
+
+
 
         data.addScore(score);
 
@@ -167,17 +178,10 @@ public class Engine implements EngineService, RequireDataService{
 
     for (PhantomService p:data.getPhantoms()){
       if(p.getPosition().x < 20){
-        System.out.println("WALLAH JE VEUX PAS mourrir");
+        System.out.println(" JE VEUX PAS mourrir");
         //data.removePhantom(p);
         data.removeScore(1);
-        if(data.getScore()< 0){
-          /*
-          Image img = new Image("file:src/images/gameOver2.png");
-          ImageView imageView = new ImageView(img);
-          popup.getContent().add(imageView);
-           */
-          this.stop();
-        }
+
       }
       }
   }
@@ -196,6 +200,21 @@ public class Engine implements EngineService, RequireDataService{
       0.25*(data.getHeroesWidth()+data.getPhantomWidth())*(data.getHeroesWidth()+data.getPhantomWidth())
     );
   }
+
+  private boolean collisionHeroesPilliers(PilierService p){
+    return (
+            (data.getHeroesPosition().x-p.getPosition().x)*(data.getHeroesPosition().x-p.getPosition().x)+
+                    (data.getHeroesPosition().y-p.getPosition().y)*(data.getHeroesPosition().y-p.getPosition().y) <
+                    0.25*(data.getHeroesWidth()+data.getPilierWidth())*(data.getHeroesWidth()+data.getPilierWidth())
+    );
+  }
+
+  private boolean collisionHeroesPilliersTest(PilierService p){
+    return (
+            (Math.abs(data.getHeroesPosition().x-p.getPosition().x)<data.getPilierWidth()) &&(Math.abs(data.getHeroesPosition().y-p.getPosition().y)<data.getPilierHeight())
+    );
+  }
+
 
   private boolean collisionHeroesPhantoms(){
     for (PhantomService p:data.getPhantoms()) if (collisionHeroesPhantom(p)) return true; return false;

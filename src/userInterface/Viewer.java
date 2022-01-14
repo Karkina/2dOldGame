@@ -49,6 +49,7 @@ public class Viewer implements ViewerService, RequireReadService{
   private ArrayList<Integer> heroesAvatarYModifiers;
   private int heroesAvatarViewportIndex;
   private double xShrink,yShrink,shrink,xModifier,yModifier,heroesScale;
+  private  Popup popup;
 
   public Viewer(){}
   
@@ -63,6 +64,13 @@ public class Viewer implements ViewerService, RequireReadService{
     yShrink=1;
     xModifier=0;
     yModifier=0;
+    popup = new Popup();
+    Button button = new Button("button");
+    Image imgGameOVer = new Image("file:src/images/gameOver2.png");
+    ImageView imageView = new ImageView(imgGameOVer);
+    popup.getContent().add(imageView);
+    imageView.setFitHeight(400);
+    imageView.setFitWidth(400);
 
     //Yucky hard-conding
     //heroesSpriteSheet = new Image("file:src/images/modern soldier large.png");
@@ -114,6 +122,11 @@ public class Viewer implements ViewerService, RequireReadService{
     
   }
 
+  @Override
+  public Popup getPopUp(){
+        return popup;
+
+  }
   @Override
   public Parent getPanel(Stage stage){
 
@@ -187,7 +200,7 @@ public class Viewer implements ViewerService, RequireReadService{
     heroesAvatarViewportIndex=(heroesAvatarViewportIndex+1)%(heroesAvatarViewports.size()*spriteSlowDownRate);
 
     Group panel = new Group();
-    panel.getChildren().addAll(map,greets,score,heroesAvatar,button);
+    panel.getChildren().addAll(map,greets,score,heroesAvatar);
 
     ArrayList<PhantomService> phantoms = data.getPhantoms();
     PhantomService p;
@@ -210,7 +223,7 @@ public class Viewer implements ViewerService, RequireReadService{
     for (int i=0; i<pilars.size();i++){
       pilar=pilars.get(i);
       double radius=.5*Math.min(shrink*data.getPhantomWidth(),shrink*data.getPhantomHeight());
-      Rectangle pilarAvatar = new Rectangle(25,100,Color.rgb(0,0,0));
+      Rectangle pilarAvatar = new Rectangle(data.getPilierWidth(),data.getPilierHeight(),Color.rgb(0,0,0));
       pilarAvatar.setEffect(new Lighting());
       pilarAvatar.setTranslateX(shrink*pilar.getPosition().x+shrink*xModifier-radius);
       pilarAvatar.setTranslateY(shrink*pilar.getPosition().y+shrink*yModifier-radius);

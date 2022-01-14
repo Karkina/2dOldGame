@@ -69,6 +69,12 @@ public class Data implements DataService{
   public double getPhantomHeight(){ return phantomHeight; }
 
   @Override
+  public double getPilierWidth(){ return pilierWidth; }
+
+  @Override
+  public double getPilierHeight(){ return pilierHeight; }
+
+  @Override
   public int getStepNumber(){ return stepNumber; }
   
   @Override

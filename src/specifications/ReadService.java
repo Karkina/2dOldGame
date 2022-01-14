@@ -22,6 +22,7 @@ public interface ReadService {
   public int getStepNumber();
   public int getScore();
   public ArrayList<PhantomService> getPhantoms();
+  public ArrayList<PhantomService> getPhantoms5PV();
   public ArrayList<PilierService> getPiliers();
 
   public Sound.SOUND getSoundEffect();

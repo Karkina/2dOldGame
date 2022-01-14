@@ -130,6 +130,9 @@ public class Main extends Application{
           case HeroesGotHit:
             new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/crunchy.wav")).play();
             break;
+          case ShipElectrocut:
+            new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/EEL3.wav")).play();
+            break;
           default:
             break;
         }

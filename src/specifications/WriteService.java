@@ -15,6 +15,7 @@ public interface WriteService {
   public void setHeroesPosition(Position p);
   public void setStepNumber(int n);
   public void addPhantom(Position p);
+  public void addPhantom5PV(Position p);
   public void addPilier(Position p);
   public void removePhantom(PhantomService p);
   public void setPhantoms(ArrayList<PhantomService> phantoms);

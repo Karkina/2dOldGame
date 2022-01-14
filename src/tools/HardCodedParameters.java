@@ -11,7 +11,7 @@ public class HardCodedParameters {
   public static String defaultParamFileName = "in.parameters";
   public static final int defaultWidth = 1280, defaultHeight = 720,
                           heroesStartX = 80, heroesStartY = 200, heroesWidth=60, heroesHeight=90, heroesStep = 10,
-                          phantomWidth = 30, phantomHeight = 30, phantomStep = 10,pilierWidth=20,pilierHeight=45;
+                          phantomWidth = 30, phantomHeight = 30, phantomStep = 10,pilierWidth=30,pilierHeight=60;
   public static final int enginePaceMillis = 100,
                           spriteSlowDownRate = 7;
   public static final double friction = 0.50;

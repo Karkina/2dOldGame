@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.stage.Popup;
 
+
 public class Engine implements EngineService, RequireDataService{
   private static final double friction=HardCodedParameters.friction,
                               heroesStep=HardCodedParameters.heroesStep,
@@ -34,6 +35,7 @@ public class Engine implements EngineService, RequireDataService{
   private DataService data;
   private User.COMMAND command;
   private Random gen;
+  private float timerHitElectro;
   private boolean moveLeft,moveRight,moveUp,moveDown;
   private double heroesVX,heroesVY;
 
@@ -57,6 +59,7 @@ public class Engine implements EngineService, RequireDataService{
     moveRight = false;
     moveUp = false;
     moveDown = false;
+    timerHitElectro = 2;
     heroesVX = 0;
     heroesVY = 0;
   }
@@ -67,7 +70,9 @@ public class Engine implements EngineService, RequireDataService{
       public void run() {
         //System.out.println("Game step #"+data.getStepNumber()+": checked.");
         
-        if (gen.nextInt(10)<3) spawnPhantom();
+        if (gen.nextInt(20)<3) spawnPhantom();
+
+        if (gen.nextInt(60)<3) spawnPhantom5PV();
 
         updateSpeedHeroes();
         updateCommandHeroes();
@@ -75,6 +80,7 @@ public class Engine implements EngineService, RequireDataService{
         testPositionPhantom();
 
         ArrayList<PhantomService> phantoms = new ArrayList<PhantomService>();
+        ArrayList<PhantomService> phantoms5PV = new ArrayList<PhantomService>();
         int score=0;
 
         data.setSoundEffect(Sound.SOUND.None);
@@ -93,16 +99,34 @@ public class Engine implements EngineService, RequireDataService{
           }
         }
 
-        for (PilierService p : data.getPiliers()) {
+        for (PhantomService p:data.getPhantoms5PV()){
+          if (p.getAction()==PhantomService.MOVE.LEFT) moveLeft(p);
+          if (p.getAction()==PhantomService.MOVE.RIGHT) moveRight(p);
+          if (p.getAction()==PhantomService.MOVE.UP) moveUp(p);
+          if (p.getAction()==PhantomService.MOVE.DOWN) moveDown(p);
 
-          if (collisionHeroesPilliersTest(p)){
+          if (collisionHeroesPhantom(p)){
             data.setSoundEffect(Sound.SOUND.HeroesGotHit);
-            System.out.println("Aie le pilier");
-            score+=10;
+            score++;
+          } else {
+            if (p.getPosition().x>0) phantoms5PV.add(p);
           }
         }
 
+        for (PilierService p : data.getPiliers()) {
 
+          if (collisionHeroesPilliersTest(p) && timerHitElectro <0){
+            int xElec= gen.nextInt(500);
+            int yElec= gen.nextInt(500);
+            data.setSoundEffect(Sound.SOUND.ShipElectrocut);
+            System.out.println("Aie le pilier");
+            timerHitElectro=2;
+            score+=10;
+            p.setPosition(new Position(xElec,yElec));
+          }
+        }
+        timerHitElectro-=0.1;
+        System.out.println(timerHitElectro);
 
         data.addScore(score);
 
@@ -164,6 +188,20 @@ public class Engine implements EngineService, RequireDataService{
       }
     }
     data.addPhantom(new Position(x,y));
+  }
+
+  private void spawnPhantom5PV(){
+    int x=(int)(HardCodedParameters.defaultWidth*.9);
+    int y=0;
+    boolean cont=true;
+    while (cont) {
+      y=(int)(gen.nextInt((int)(HardCodedParameters.defaultHeight*.6))+HardCodedParameters.defaultHeight*.1);
+      cont=false;
+      for (PhantomService p:data.getPhantoms()){
+        if (p.getPosition().equals(new Position(x,y))) cont=true;
+      }
+    }
+    data.addPhantom5PV(new Position(x,y));
   }
 
   private void moveLeft(PhantomService p){

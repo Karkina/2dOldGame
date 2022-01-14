@@ -130,28 +130,6 @@ public class Viewer implements ViewerService, RequireReadService{
   @Override
   public Parent getPanel(Stage stage){
 
-    final Popup popup = new Popup();
-
-    Button button = new Button("button");
-    Image imgGameOVer = new Image("file:src/images/gameOver2.png");
-    ImageView imageView = new ImageView(imgGameOVer);
-    Label label = new Label("This is a Popup");
-    popup.getContent().add(imageView);
-    imageView.setFitHeight(400);
-    imageView.setFitWidth(400);
-    EventHandler<ActionEvent> event =
-            new EventHandler<ActionEvent>() {
-
-              public void handle(ActionEvent e)
-              {
-                if (!popup.isShowing())
-                  popup.show(stage);
-                else
-                  popup.hide();
-              }
-            };
-    //popup.show(stage);
-    button.setOnAction(event);
 
     shrink=Math.min(xShrink,yShrink);
     xModifier=.01*shrink*defaultMainHeight;
@@ -217,6 +195,22 @@ public class Viewer implements ViewerService, RequireReadService{
       panel.getChildren().add(phantomAvatar);
     }
 
+
+    ArrayList<PhantomService> phantoms5PV = data.getPhantoms5PV();
+    PhantomService p5PV;
+
+    for (int i=0; i<phantoms5PV.size();i++) {
+      p5PV = phantoms5PV.get(i);
+      double radius = .5 * Math.min(shrink * data.getPhantomWidth(), shrink * data.getPhantomHeight());
+      Circle phantomAvatar = new Circle(radius);
+      Image imgCreature = new Image("file:src/images/extra5PV.png");
+      phantomAvatar.setFill(new ImagePattern(imgCreature));
+      phantomAvatar.setEffect(new Lighting());
+      phantomAvatar.setTranslateX(shrink * p5PV.getPosition().x + shrink * xModifier - radius);
+      phantomAvatar.setTranslateY(shrink * p5PV.getPosition().y + shrink * yModifier - radius);
+      panel.getChildren().add(phantomAvatar);
+    }
+
     ArrayList<PilierService> pilars = data.getPiliers();
 
     PilierService pilar;
@@ -224,6 +218,8 @@ public class Viewer implements ViewerService, RequireReadService{
       pilar=pilars.get(i);
       double radius=.5*Math.min(shrink*data.getPhantomWidth(),shrink*data.getPhantomHeight());
       Rectangle pilarAvatar = new Rectangle(data.getPilierWidth(),data.getPilierHeight(),Color.rgb(0,0,0));
+      Image imgElec = new Image("file:src/images/electro.png");
+      pilarAvatar.setFill(new ImagePattern(imgElec));
       pilarAvatar.setEffect(new Lighting());
       pilarAvatar.setTranslateX(shrink*pilar.getPosition().x+shrink*xModifier-radius);
       pilarAvatar.setTranslateY(shrink*pilar.getPosition().y+shrink*yModifier-radius);

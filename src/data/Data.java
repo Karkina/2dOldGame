@@ -25,6 +25,7 @@ public class Data implements DataService{
   private Position heroesPosition;
   private int stepNumber, score;
   private ArrayList<PhantomService> phantoms;
+  private ArrayList<PhantomService> phantoms5PV;
   private ArrayList<PilierService> piliers;
   private double heroesWidth,heroesHeight,phantomWidth,phantomHeight,pilierWidth,pilierHeight;
   private Sound.SOUND sound;
@@ -37,6 +38,7 @@ public class Data implements DataService{
     //hercules = new Heroes;
     heroesPosition = new Position(HardCodedParameters.heroesStartX,HardCodedParameters.heroesStartY);
     phantoms = new ArrayList<PhantomService>();
+    phantoms5PV = new ArrayList<PhantomService>();
     stepNumber = 0;
     score = 0;
     maxHorizontal = 1180;
@@ -82,6 +84,9 @@ public class Data implements DataService{
 
   @Override
   public ArrayList<PhantomService> getPhantoms(){ return phantoms; }
+  @Override
+  public ArrayList<PhantomService> getPhantoms5PV(){ return phantoms5PV; }
+
 
   @Override
   public ArrayList<PilierService> getPiliers(){return piliers;}
@@ -103,6 +108,9 @@ public class Data implements DataService{
 
   @Override
   public void addPhantom(Position p) { phantoms.add(new MoveLeftPhantom(p)); }
+
+  @Override
+  public void addPhantom5PV(Position p) { phantoms5PV.add(new MoveLeftPhantom(p)); }
 
   @Override
   public void removePhantom(PhantomService p) { phantoms.remove(p); }

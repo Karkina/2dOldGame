@@ -47,6 +47,7 @@ public class Main extends Application{
   private static EngineService engine;
   private static ViewerService viewer;
   private static AnimationTimer timer;
+  private int round;
 
   //---EXECUTABLE---//
   public static void main(String[] args) {
@@ -68,7 +69,7 @@ public class Main extends Application{
   @Override public void start(Stage stage) {
 
     final Scene scene = new Scene(((Viewer)viewer).getPanel(stage));
-
+    round =1;
     scene.setFill(Color.BLACK);
     scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
       @Override
@@ -116,32 +117,66 @@ public class Main extends Application{
     });
     stage.show();
     timer = new AnimationTimer() {
+
       @Override public void handle(long l) {
-        if(data.getScore() < 0) {
-          System.out.println(data.getScore());
-          ((Viewer)viewer).getPopUp().show(stage);
-          engine.stop();
+        System.out.println(((Viewer) viewer).getPause());
+        if (!((Viewer) viewer).getPause()) {
+          System.out.println("Hello BUTTON2");
+          ((Viewer) viewer).setPause(true);
+          engine.start();
+
         }
-        scene.setRoot(((Viewer)viewer).getPanel(stage));
-        switch (data.getSoundEffect()){
-          case PhantomDestroyed:
-            new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/crunchy.wav")).play();
+
+        if (data.getScore() < 0) {
+          System.out.println(data.getScore());
+          ((Viewer) viewer).getPopUpOver().show(stage);
+          engine.stop();
+          super.stop();
+        }
+        switch (round) {
+          case 1:
+            if (data.getScore() > HardCodedParameters.pointRoundWin1) {
+              System.out.println(data.getScore());
+              ((Viewer) viewer).getPopUpWin().show(stage);
+              engine.stop();
+              data.setScore(0);
+              round++;
+
+
+            }
             break;
-          case HeroesGotHit:
-            new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/crunchy.wav")).play();
+          case 2:
+            if (data.getScore() > HardCodedParameters.pointRoundWin2) {
+              System.out.println(data.getScore());
+              ((Viewer) viewer).getPopUpWin().show(stage);
+              engine.stop();
+              round++;
+
+            }
             break;
-          case ShipElectrocut:
-            new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/EEL3.wav")).play();
-            break;
-          default:
-            break;
+        }
+
+        scene.setRoot(((Viewer) viewer).getPanel(stage));
+        if (!((Viewer) viewer).getPause()) {
+          switch (data.getSoundEffect()) {
+            case PhantomDestroyed:
+              new MediaPlayer(new Media(getHostServices().getDocumentBase() + "src/sound/crunchy.wav")).play();
+              break;
+            case HeroesGotHit:
+              new MediaPlayer(new Media(getHostServices().getDocumentBase() + "src/sound/crunchy.wav")).play();
+              break;
+            case ShipElectrocut:
+              new MediaPlayer(new Media(getHostServices().getDocumentBase() + "src/sound/EEL3.wav")).play();
+              break;
+            default:
+              break;
+          }
         }
       }
     };
     timer.start();
 
   }
-
   //---ARGUMENTS---//
   private static void readArguments(String[] args){
     if (args.length>0 && args[0].charAt(0)!='-'){

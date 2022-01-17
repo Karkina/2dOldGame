@@ -25,7 +25,10 @@ public class HardCodedParameters {
   public static final int displayZoneXStep = 5,
                           displayZoneYStep = 5,
                           displayZoneXZoomStep = 5,
-                          displayZoneYZoomStep = 5;
+                          displayZoneYZoomStep = 5,
+                          pointRoundWin1 = 50,
+                          pointRoundWin2 = 70,
+                          pointRoundWin3 = 90;
   public static final double displayZoneAlphaZoomStep = 0.98;
 
   //---MISCELLANOUS---//

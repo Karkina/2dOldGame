@@ -70,9 +70,9 @@ public class Engine implements EngineService, RequireDataService{
       public void run() {
         //System.out.println("Game step #"+data.getStepNumber()+": checked.");
         
-        if (gen.nextInt(20)<3) spawnPhantom();
+        if (gen.nextInt(80)<3) spawnPhantom();
 
-        if (gen.nextInt(60)<3) spawnPhantom5PV();
+        if (gen.nextInt(200)<3) spawnPhantom5PV();
 
         updateSpeedHeroes();
         updateCommandHeroes();
@@ -107,7 +107,7 @@ public class Engine implements EngineService, RequireDataService{
 
           if (collisionHeroesPhantom(p)){
             data.setSoundEffect(Sound.SOUND.HeroesGotHit);
-            score++;
+            score+=3;
           } else {
             if (p.getPosition().x>0) phantoms5PV.add(p);
           }
@@ -131,6 +131,7 @@ public class Engine implements EngineService, RequireDataService{
         data.addScore(score);
 
         data.setPhantoms(phantoms);
+        data.setPhantoms5PV(phantoms5PV);
 
         data.setStepNumber(data.getStepNumber()+1);
       }
@@ -141,6 +142,7 @@ public class Engine implements EngineService, RequireDataService{
   public void stop(){
     engineClock.cancel();
   }
+
 
   @Override
   public void setHeroesCommand(User.COMMAND c){
@@ -215,13 +217,22 @@ public class Engine implements EngineService, RequireDataService{
   {
 
     for (PhantomService p:data.getPhantoms()){
-      if(p.getPosition().x < 20){
+      if(p.getPosition().x < 5){
         System.out.println(" JE VEUX PAS mourrir");
         //data.removePhantom(p);
         data.removeScore(1);
 
       }
       }
+
+    for (PhantomService p:data.getPhantoms5PV()){
+      if(p.getPosition().x < 5){
+        System.out.println(" JE VEUX PAS mourrir");
+        //data.removePhantom(p);
+        data.removeScore(5);
+
+      }
+    }
   }
   private void moveUp(PhantomService p){
     p.setPosition(new Position(p.getPosition().x,p.getPosition().y-phantomStep));

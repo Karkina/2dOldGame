@@ -49,8 +49,9 @@ public class Viewer implements ViewerService, RequireReadService{
   private ArrayList<Integer> heroesAvatarYModifiers;
   private int heroesAvatarViewportIndex;
   private double xShrink,yShrink,shrink,xModifier,yModifier,heroesScale;
-  private  Popup popup;
-
+  private  Popup popupOver,popupWin;
+  private Button button;
+  private boolean pause;
   public Viewer(){}
   
   @Override
@@ -60,17 +61,41 @@ public class Viewer implements ViewerService, RequireReadService{
 
   @Override
   public void init(){
+    pause = true;
     xShrink=1;
     yShrink=1;
     xModifier=0;
     yModifier=0;
-    popup = new Popup();
-    Button button = new Button("button");
+    popupOver = new Popup();
     Image imgGameOVer = new Image("file:src/images/gameOver2.png");
     ImageView imageView = new ImageView(imgGameOVer);
-    popup.getContent().add(imageView);
+    popupOver.getContent().add(imageView);
     imageView.setFitHeight(400);
     imageView.setFitWidth(400);
+
+
+    popupWin =new Popup();
+    Image imgGameWin = new Image("file:src/images/win.jpg");
+    button = new Button(" Round 2");
+    ImageView imageViewWin = new ImageView(imgGameWin);
+    popupWin.getContent().add(imageViewWin);
+    popupWin.getContent().add(button);
+
+    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent e)
+      {
+        popupWin.hide();
+        System.out.println("Hello BUTTON");
+        setPause(false);
+      }
+    };
+    button.setOnAction(event);
+    imageView.setFitHeight(400);
+    imageView.setFitWidth(400);
+    button.setMinWidth(25);
+    button.setMinHeight(25);
+    button.setLayoutX(200+25);
+    button.setLayoutY(200+25);
 
     //Yucky hard-conding
     //heroesSpriteSheet = new Image("file:src/images/modern soldier large.png");
@@ -122,9 +147,25 @@ public class Viewer implements ViewerService, RequireReadService{
     
   }
 
+
   @Override
-  public Popup getPopUp(){
-        return popup;
+  public boolean getPause(){
+    return this.pause;
+
+  }
+
+  @Override
+  public void setPause(boolean b){
+     this.pause =b;
+  }
+
+  @Override
+  public Popup getPopUpOver(){
+        return popupOver;
+  }
+  @Override
+  public Popup getPopUpWin(){
+    return popupWin;
 
   }
   @Override
@@ -228,6 +269,7 @@ public class Viewer implements ViewerService, RequireReadService{
 
     return panel;
   }
+  /*
   public Parent getGameOver(){
 
     Rectangle map = new Rectangle(-2*xModifier+shrink*defaultMainWidth,
@@ -245,7 +287,7 @@ public class Viewer implements ViewerService, RequireReadService{
     panel.getChildren().addAll(map);
     return  panel;
 
-  }
+  }*/
 
 
   @Override

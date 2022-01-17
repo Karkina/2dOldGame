@@ -12,7 +12,10 @@ import javafx.stage.Popup;
 public interface ViewerService{
   public void init();
   public Parent getPanel(Stage stage);
-  public Popup getPopUp();
+  public boolean getPause();
+  public void setPause(boolean b );
+  public Popup getPopUpOver();
+  public Popup getPopUpWin();
   public void setMainWindowWidth(double w);
   public void setMainWindowHeight(double h);
 }

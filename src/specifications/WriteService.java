@@ -19,7 +19,9 @@ public interface WriteService {
   public void addPilier(Position p);
   public void removePhantom(PhantomService p);
   public void setPhantoms(ArrayList<PhantomService> phantoms);
+  public void setPhantoms5PV(ArrayList<PhantomService> phantoms);
   public void setSoundEffect(Sound.SOUND s);
+  public void setScore(int scoreAmount);
   public void addScore(int score);
   public void removeScore(int score);
 }

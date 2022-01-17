@@ -107,6 +107,9 @@ public class Data implements DataService{
   public void removeScore(int score){ this.score-=score; }
 
   @Override
+  public void setScore( int scoreAmount){  this.score=scoreAmount; }
+
+  @Override
   public void addPhantom(Position p) { phantoms.add(new MoveLeftPhantom(p)); }
 
   @Override
@@ -121,6 +124,9 @@ public class Data implements DataService{
   
   @Override
   public void setPhantoms(ArrayList<PhantomService> phantoms) { this.phantoms=phantoms; }
+
+  @Override
+  public void setPhantoms5PV(ArrayList<PhantomService> phantoms) { this.phantoms5PV=phantoms; }
   
   @Override
   public void setSoundEffect(Sound.SOUND s) { sound=s; }

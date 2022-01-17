@@ -15,10 +15,9 @@ public interface WriteService {
   public void setHeroesPosition(Position p);
   public void setStepNumber(int n);
   public void addPhantom(Position p);
-  public void addPilier(Position p);
-  public void removePhantom(PhantomService p);
   public void setPhantoms(ArrayList<PhantomService> phantoms);
+  public void addLaser(Position p);
+  public void setLasers(ArrayList<LaserService> lasers);
   public void setSoundEffect(Sound.SOUND s);
   public void addScore(int score);
-  public void removeScore(int score);
 }

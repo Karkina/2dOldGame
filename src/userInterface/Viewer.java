@@ -12,8 +12,8 @@ import specifications.ViewerService;
 import specifications.ReadService;
 import specifications.RequireReadService;
 import specifications.PhantomService;
-import specifications.PilierService;
-import tools.Position;
+import specifications.LaserService;
+
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.effect.Lighting;
@@ -23,17 +23,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Rectangle2D;
-
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.Popup;
 
 import java.util.ArrayList;
 
@@ -51,7 +42,7 @@ public class Viewer implements ViewerService, RequireReadService{
   private double xShrink,yShrink,shrink,xModifier,yModifier,heroesScale;
 
   public Viewer(){}
-  
+
   @Override
   public void bindReadService(ReadService service){
     data=service;
@@ -65,19 +56,16 @@ public class Viewer implements ViewerService, RequireReadService{
     yModifier=0;
 
     //Yucky hard-conding
-    //heroesSpriteSheet = new Image("file:src/images/modern soldier large.png");
-    heroesSpriteSheet = new Image("file:src/images/vaisseau.png");
+    heroesSpriteSheet = new Image("file:src/images/modern soldier large.png");
     heroesAvatar = new ImageView(heroesSpriteSheet);
     heroesAvatarViewports = new ArrayList<Rectangle2D>();
     heroesAvatarXModifiers = new ArrayList<Integer>();
     heroesAvatarYModifiers = new ArrayList<Integer>();
 
     heroesAvatarViewportIndex=0;
-    
+
     //TODO: replace the following with XML loader
     //heroesAvatarViewports.add(new Rectangle2D(301,386,95,192));
-    /*heroesAvatarViewports.add(new Rectangle2D(570,194,115,190));
-
     heroesAvatarViewports.add(new Rectangle2D(570,194,115,190));
     heroesAvatarViewports.add(new Rectangle2D(398,386,133,192));
     heroesAvatarViewports.add(new Rectangle2D(155,194,147,190));
@@ -85,22 +73,10 @@ public class Viewer implements ViewerService, RequireReadService{
     heroesAvatarViewports.add(new Rectangle2D(127,582,135,198));
     heroesAvatarViewports.add(new Rectangle2D(264,582,111,200));
     heroesAvatarViewports.add(new Rectangle2D(2,582,123,198));
-    heroesAvatarViewports.add(new Rectangle2D(533,386,115,192));*/
-
-
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-    heroesAvatarViewports.add(new Rectangle2D(0,0,2000,2000));
-
+    heroesAvatarViewports.add(new Rectangle2D(533,386,115,192));
     //heroesAvatarViewports.add(new Rectangle2D(204,386,95,192));
 
     //heroesAvatarXModifiers.add(10);heroesAvatarYModifiers.add(-7);
-
     heroesAvatarXModifiers.add(6);heroesAvatarYModifiers.add(-6);
     heroesAvatarXModifiers.add(2);heroesAvatarYModifiers.add(-8);
     heroesAvatarXModifiers.add(1);heroesAvatarYModifiers.add(-10);
@@ -109,37 +85,12 @@ public class Viewer implements ViewerService, RequireReadService{
     heroesAvatarXModifiers.add(5);heroesAvatarYModifiers.add(-13);
     heroesAvatarXModifiers.add(0);heroesAvatarYModifiers.add(-9);
     heroesAvatarXModifiers.add(0);heroesAvatarYModifiers.add(-6);
-
     //heroesAvatarXModifiers.add(10);heroesAvatarYModifiers.add(-7);
-    
+
   }
 
   @Override
-  public Parent getPanel(Stage stage){
-
-    final Popup popup = new Popup();
-
-    Button button = new Button("button");
-    Image imgGameOVer = new Image("file:src/images/gameOver2.png");
-    ImageView imageView = new ImageView(imgGameOVer);
-    Label label = new Label("This is a Popup");
-    popup.getContent().add(imageView);
-    imageView.setFitHeight(400);
-    imageView.setFitWidth(400);
-    EventHandler<ActionEvent> event =
-            new EventHandler<ActionEvent>() {
-
-              public void handle(ActionEvent e)
-              {
-                if (!popup.isShowing())
-                  popup.show(stage);
-                else
-                  popup.hide();
-              }
-            };
-    //popup.show(stage);
-    button.setOnAction(event);
-
+  public Parent getPanel(){
     shrink=Math.min(xShrink,yShrink);
     xModifier=.01*shrink*defaultMainHeight;
     yModifier=.01*shrink*defaultMainHeight;
@@ -147,29 +98,25 @@ public class Viewer implements ViewerService, RequireReadService{
     //Yucky hard-conding
     Rectangle map = new Rectangle(-2*xModifier+shrink*defaultMainWidth,
                                   -.2*shrink*defaultMainHeight+shrink*defaultMainHeight);
-    Image img = new Image("file:src/images/astrologie.jpg");
-    map.setFill(new ImagePattern(img));
+    map.setFill(Color.WHITE);
     map.setStroke(Color.DIMGRAY);
     map.setStrokeWidth(.01*shrink*defaultMainHeight);
     map.setArcWidth(.04*shrink*defaultMainHeight);
     map.setArcHeight(.04*shrink*defaultMainHeight);
     map.setTranslateX(xModifier);
     map.setTranslateY(yModifier);
-    
+
     Text greets = new Text(-0.1*shrink*defaultMainHeight+.5*shrink*defaultMainWidth,
                            -0.1*shrink*defaultMainWidth+shrink*defaultMainHeight,
                            "Round 1");
     greets.setFont(new Font(.05*shrink*defaultMainHeight));
-    greets.setFill(Color.WHITE);
-    
+
     Text score = new Text(-0.1*shrink*defaultMainHeight+.5*shrink*defaultMainWidth,
                            -0.05*shrink*defaultMainWidth+shrink*defaultMainHeight,
                            "Score: "+data.getScore());
     score.setFont(new Font(.05*shrink*defaultMainHeight));
-    score.setFill(Color.WHITE);
-    
-    //int index=heroesAvatarViewportIndex/spriteSlowDownRate;
-    int index =0;
+
+    int index=heroesAvatarViewportIndex/spriteSlowDownRate;
     heroesScale=data.getHeroesHeight()*shrink/heroesAvatarViewports.get(index).getHeight();
     heroesAvatar.setViewport(heroesAvatarViewports.get(index));
     heroesAvatar.setFitHeight(data.getHeroesHeight()*shrink);
@@ -187,66 +134,49 @@ public class Viewer implements ViewerService, RequireReadService{
     heroesAvatarViewportIndex=(heroesAvatarViewportIndex+1)%(heroesAvatarViewports.size()*spriteSlowDownRate);
 
     Group panel = new Group();
-    panel.getChildren().addAll(map,greets,score,heroesAvatar,button);
+    panel.getChildren().addAll(map,greets,score,heroesAvatar);
 
     ArrayList<PhantomService> phantoms = data.getPhantoms();
     PhantomService p;
 
-    for (int i=0; i<phantoms.size();i++) {
-      p = phantoms.get(i);
-      double radius = .5 * Math.min(shrink * data.getPhantomWidth(), shrink * data.getPhantomHeight());
-      Circle phantomAvatar = new Circle(radius);
-      Image imgCreature = new Image("file:src/images/creature.png");
-      phantomAvatar.setFill(new ImagePattern(imgCreature));
+    for (int i=0; i<phantoms.size();i++){
+      p=phantoms.get(i);
+      double radius=.5*Math.min(shrink*data.getPhantomWidth(),shrink*data.getPhantomHeight());
+      Circle phantomAvatar = new Circle(radius,Color.rgb(255,156,156));
       phantomAvatar.setEffect(new Lighting());
-      phantomAvatar.setTranslateX(shrink * p.getPosition().x + shrink * xModifier - radius);
-      phantomAvatar.setTranslateY(shrink * p.getPosition().y + shrink * yModifier - radius);
+      phantomAvatar.setTranslateX(shrink*p.getPosition().x+shrink*xModifier-radius);
+      phantomAvatar.setTranslateY(shrink*p.getPosition().y+shrink*yModifier-radius);
       panel.getChildren().add(phantomAvatar);
     }
 
-    ArrayList<PilierService> pilars = data.getPiliers();
+    Rectangle laser = new Rectangle(200, 5);
+    laser.setTranslateX(100);
+    laser.setTranslateY(100);
+    panel.getChildren().add(laser);
 
-    PilierService pilar;
-    for (int i=0; i<pilars.size();i++){
-      pilar=pilars.get(i);
-      double radius=.5*Math.min(shrink*data.getPhantomWidth(),shrink*data.getPhantomHeight());
-      Rectangle pilarAvatar = new Rectangle(25,100,Color.rgb(0,0,0));
-      pilarAvatar.setEffect(new Lighting());
-      pilarAvatar.setTranslateX(shrink*pilar.getPosition().x+shrink*xModifier-radius);
-      pilarAvatar.setTranslateY(shrink*pilar.getPosition().y+shrink*yModifier-radius);
-      panel.getChildren().add(pilarAvatar);
+    ArrayList<LaserService> lasers = data.getLasers();
+    LaserService singleLaser;
+    for (int i=0; i<lasers.size();i++){
+      singleLaser=lasers.get(i);
+      // double radius=.5*Math.min(shrink*data.getPhantomWidth(),shrink*data.getPhantomHeight());
+      // Circle phantomAvatar = new Circle(radius,Color.rgb(255,156,156));
+      Rectangle laserAvatar = new Rectangle(200, 5);
+      // laserAvatar.setEffect(new Lighting());
+      laserAvatar.setTranslateX(shrink*singleLaser.getPosition().x+shrink*xModifier);
+      laserAvatar.setTranslateY(shrink*singleLaser.getPosition().y+shrink*yModifier);
+      panel.getChildren().add(laserAvatar);
     }
 
     return panel;
   }
-  public Parent getGameOver(){
-
-    Rectangle map = new Rectangle(-2*xModifier+shrink*defaultMainWidth,
-            -.2*shrink*defaultMainHeight+shrink*defaultMainHeight);
-    Image img = new Image("file:src/images/gameOver2.png");
-    map.setFill(new ImagePattern(img));
-    map.setStroke(Color.DIMGRAY);
-    map.setStrokeWidth(.01*shrink*defaultMainHeight);
-    map.setArcWidth(.04*shrink*defaultMainHeight);
-    map.setArcHeight(.04*shrink*defaultMainHeight);
-    map.setTranslateX(xModifier);
-    map.setTranslateY(yModifier);
-
-    Group panel = new Group();
-    panel.getChildren().addAll(map);
-    return  panel;
-
-  }
-
 
   @Override
   public void setMainWindowWidth(double width){
     xShrink=width/defaultMainWidth;
   }
-  
+
   @Override
   public void setMainWindowHeight(double height){
     yShrink=height/defaultMainHeight;
   }
-
 }

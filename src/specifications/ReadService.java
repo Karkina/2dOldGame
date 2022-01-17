@@ -17,10 +17,11 @@ public interface ReadService {
   public double getHeroesHeight();
   public double getPhantomWidth();
   public double getPhantomHeight();
+  public double getLaserWidth();
+  public double getLaserHeight();
   public int getStepNumber();
   public int getScore();
   public ArrayList<PhantomService> getPhantoms();
-  public ArrayList<PilierService> getPiliers();
-
+  public ArrayList<LaserService> getLasers();
   public Sound.SOUND getSoundEffect();
 }

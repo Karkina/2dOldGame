@@ -69,6 +69,7 @@ public class Engine implements EngineService, RequireDataService{
         updatePositionHeroes();
 
         ArrayList<PhantomService> phantoms = new ArrayList<PhantomService>();
+        ArrayList<LaserService> lasers = new ArrayList<LaserService>();
         int score=0;
 
         data.setSoundEffect(Sound.SOUND.None);
@@ -79,7 +80,7 @@ public class Engine implements EngineService, RequireDataService{
           // if (p.getAction()==PhantomService.MOVE.UP) moveUp(p);
           // if (p.getAction()==PhantomService.MOVE.DOWN) moveDown(p);
 
-          if (collisionHeroesPhantom(p)){
+          if (collisionHeroesPhantom(p) || collisionPhantomsLasers(p)){
             data.setSoundEffect(Sound.SOUND.HeroesGotHit);
             score++;
           } else {
@@ -89,16 +90,25 @@ public class Engine implements EngineService, RequireDataService{
 
         for (LaserService singleLaser:data.getLasers()){
           if (singleLaser.getAction()==LaserService.MOVE.RIGHT) laserRightMovement(singleLaser);
+
+          // if (collisionHeroesPhantom(p)){
+          //   data.setSoundEffect(Sound.SOUND.HeroesGotHit);
+          //   score++;
+          // } else {
+          //   if (p.getPosition().x>0) phantoms.add(p);
+          // }
         }
 
-        if(collisionPhantomsLasers()){
-            // data.setSoundEffect(Sound.SOUND.HeroesGotHit);
-            score++;
-        } else {
-            // if (p.getPosition().x>0) phantoms.add(p);
-        }
+        // if(collisionPhantomsLasers()){
+        //     data.setSoundEffect(Sound.SOUND.HeroesGotHit);
+        //     score++;
+        // } else {
+        //     if (p.getPosition().x>0) phantoms.add(p);
+        // }
 
         data.addScore(score);
+
+        data.setLasers(lasers);
 
         data.setPhantoms(phantoms);
 
@@ -234,13 +244,11 @@ public class Engine implements EngineService, RequireDataService{
     );
   }
 
-  private boolean collisionPhantomsLasers(){
-    for (PhantomService phantom:data.getPhantoms()){
-        for(LaserService laser:data.getLasers()){
-            if (collisionPhantomLaser(phantom, laser)){
-                System.out.println("hello");
-                return true;
-            }
+  private boolean collisionPhantomsLasers(PhantomService phantom){
+    for(LaserService laser:data.getLasers()){
+        if (collisionPhantomLaser(phantom, laser)){
+            System.out.println("hello");
+            return true;
         }
     }
     return false;

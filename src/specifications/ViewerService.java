@@ -5,12 +5,12 @@
  * $Id: specifications/ViewerService.java 2015-03-11 buixuan.
  * ******************************************************/
 package specifications;
-import javafx.stage.Stage;
+
 import javafx.scene.Parent;
 
 public interface ViewerService{
   public void init();
-  public Parent getPanel(Stage stage);
+  public Parent getPanel();
   public void setMainWindowWidth(double w);
   public void setMainWindowHeight(double h);
 }

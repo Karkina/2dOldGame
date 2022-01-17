@@ -9,9 +9,10 @@ package tools;
 public class HardCodedParameters {
   //---HARD-CODED-PARAMETERS---//
   public static String defaultParamFileName = "in.parameters";
-  public static final int defaultWidth = 1280, defaultHeight = 720,
+  public static final int defaultWidth = 800, defaultHeight = 600,
                           heroesStartX = 80, heroesStartY = 200, heroesWidth=60, heroesHeight=90, heroesStep = 10,
-                          phantomWidth = 30, phantomHeight = 30, phantomStep = 10,pilierWidth=10,pilierHeight=20;
+                          phantomWidth = 30, phantomHeight = 30, phantomStep = 30, maxWidth=200, maxHeight=400,
+                          laserWidth = 200, laserHeight = 5, laserStep = 30;
   public static final int enginePaceMillis = 100,
                           spriteSlowDownRate = 7;
   public static final double friction = 0.50;
@@ -32,7 +33,7 @@ public class HardCodedParameters {
   public static final Object loadingLock = new Object();
   public static final String greetingsZoneId = String.valueOf(0xED1C7E),
                              simulatorZoneId = String.valueOf(0x51E77E);
-  
+
   public static <T> T instantiate(final String className, final Class<T> type){
     try{
       return type.cast(Class.forName(className).newInstance());

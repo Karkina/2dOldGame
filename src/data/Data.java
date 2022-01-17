@@ -12,11 +12,10 @@ import tools.Sound;
 
 import specifications.DataService;
 import specifications.PhantomService;
-import specifications.PilierService;
+import specifications.LaserService;
 
-
-import data.ia.PilierStatic;
 import data.ia.MoveLeftPhantom;
+import data.ia.MoveRightLaser;
 
 import java.util.ArrayList;
 
@@ -25,10 +24,9 @@ public class Data implements DataService{
   private Position heroesPosition;
   private int stepNumber, score;
   private ArrayList<PhantomService> phantoms;
-  private ArrayList<PilierService> piliers;
-  private double heroesWidth,heroesHeight,phantomWidth,phantomHeight,pilierWidth,pilierHeight;
+  private ArrayList<LaserService> lasers;
+  private double heroesWidth,heroesHeight,phantomWidth,phantomHeight,laserWidth,laserHeight;
   private Sound.SOUND sound;
-  private int maxHorizontal, maxVertical,minHorizontal,minVertical;
 
   public Data(){}
 
@@ -37,40 +35,43 @@ public class Data implements DataService{
     //hercules = new Heroes;
     heroesPosition = new Position(HardCodedParameters.heroesStartX,HardCodedParameters.heroesStartY);
     phantoms = new ArrayList<PhantomService>();
+    lasers = new ArrayList<LaserService>();
     stepNumber = 0;
     score = 0;
-    maxHorizontal = 1180;
-    minHorizontal = 50;
-    maxVertical =500;
-    minVertical=10;
     heroesWidth = HardCodedParameters.heroesWidth;
     heroesHeight = HardCodedParameters.heroesHeight;
     phantomWidth = HardCodedParameters.phantomWidth;
     phantomHeight = HardCodedParameters.phantomHeight;
-    pilierWidth = HardCodedParameters.pilierWidth;
-    pilierHeight = HardCodedParameters.pilierHeight;
-    piliers = new ArrayList<PilierService>();
+
+    laserWidth = HardCodedParameters.laserWidth;
+    laserHeight = HardCodedParameters.laserHeight;
     sound = Sound.SOUND.None;
   }
 
   @Override
   public Position getHeroesPosition(){ return heroesPosition; }
-  
+
   @Override
   public double getHeroesWidth(){ return heroesWidth; }
-  
+
   @Override
   public double getHeroesHeight(){ return heroesHeight; }
-  
+
   @Override
   public double getPhantomWidth(){ return phantomWidth; }
-  
+
   @Override
   public double getPhantomHeight(){ return phantomHeight; }
 
   @Override
+  public double getLaserWidth(){ return laserWidth; }
+
+  @Override
+  public double getLaserHeight(){ return laserHeight; }
+
+  @Override
   public int getStepNumber(){ return stepNumber; }
-  
+
   @Override
   public int getScore(){ return score; }
 
@@ -78,36 +79,32 @@ public class Data implements DataService{
   public ArrayList<PhantomService> getPhantoms(){ return phantoms; }
 
   @Override
-  public ArrayList<PilierService> getPiliers(){return piliers;}
-  
+  public ArrayList<LaserService> getLasers(){ return lasers; }
+
   @Override
   public Sound.SOUND getSoundEffect() { return sound; }
 
   @Override
-  public void setHeroesPosition(Position p) { if(p.x <maxHorizontal && p.x > minHorizontal && p.y <maxVertical && p.y > minVertical) heroesPosition = p; }
-  
-  @Override
-  public void setStepNumber(int n){ stepNumber=n; }
-  
-  @Override
-  public void addScore(int score){ this.score+=score; }
+  public void setHeroesPosition(Position p) { heroesPosition=p; }
 
   @Override
-  public void removeScore(int score){ this.score-=score; }
+  public void setStepNumber(int n){ stepNumber=n; }
+
+  @Override
+  public void addScore(int score){ this.score+=score; }
 
   @Override
   public void addPhantom(Position p) { phantoms.add(new MoveLeftPhantom(p)); }
 
   @Override
-  public void removePhantom(PhantomService p) { phantoms.remove(p); }
-
-  @Override
-  public void addPilier(Position p) { piliers.add(new PilierStatic(p)); }
-
-  
-  @Override
   public void setPhantoms(ArrayList<PhantomService> phantoms) { this.phantoms=phantoms; }
-  
+
+  @Override
+  public void addLaser(Position p) { lasers.add(new MoveRightLaser(p)); }
+
+  @Override
+  public void setLasers(ArrayList<LaserService> lasers) { this.lasers=lasers; }
+
   @Override
   public void setSoundEffect(Sound.SOUND s) { sound=s; }
 }

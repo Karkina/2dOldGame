@@ -26,15 +26,12 @@ import javafx.stage.WindowEvent;
 import javafx.event.EventHandler;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -62,14 +59,14 @@ public class Main extends Application{
     data.init();
     engine.init();
     viewer.init();
+
     launch(args);
   }
 
   @Override public void start(Stage stage) {
+    final Scene scene = new Scene(((Viewer)viewer).getPanel());
 
-    final Scene scene = new Scene(((Viewer)viewer).getPanel(stage));
-
-    scene.setFill(Color.BLACK);
+    scene.setFill(Color.CORNFLOWERBLUE);
     scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
       @Override
         public void handle(KeyEvent event) {
@@ -77,6 +74,8 @@ public class Main extends Application{
           if (event.getCode()==KeyCode.RIGHT) engine.setHeroesCommand(User.COMMAND.RIGHT);
           if (event.getCode()==KeyCode.UP) engine.setHeroesCommand(User.COMMAND.UP);
           if (event.getCode()==KeyCode.DOWN) engine.setHeroesCommand(User.COMMAND.DOWN);
+          // if (event.getCode()==KeyCode.SPACE) System.out.println("shoot!");
+          if (event.getCode()==KeyCode.SPACE) engine.spawnLaser(data.getHeroesPosition());
           event.consume();
         }
     });
@@ -100,7 +99,7 @@ public class Main extends Application{
           viewer.setMainWindowHeight(newSceneHeight.doubleValue());
         }
     });
-    
+
     stage.setScene(scene);
     stage.setWidth(HardCodedParameters.defaultWidth);
     stage.setHeight(HardCodedParameters.defaultHeight);
@@ -115,10 +114,10 @@ public class Main extends Application{
       }
     });
     stage.show();
-    
+
     timer = new AnimationTimer() {
       @Override public void handle(long l) {
-        scene.setRoot(((Viewer)viewer).getPanel(stage));
+        scene.setRoot(((Viewer)viewer).getPanel());
         switch (data.getSoundEffect()){
           case PhantomDestroyed:
             new MediaPlayer(new Media(getHostServices().getDocumentBase()+"src/sound/crunchy.wav")).play();
@@ -132,7 +131,6 @@ public class Main extends Application{
       }
     };
     timer.start();
-
   }
 
   //---ARGUMENTS---//

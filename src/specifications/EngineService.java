@@ -7,6 +7,7 @@
 package specifications;
 
 import tools.User;
+import tools.Position;
 
 public interface EngineService{
   public void init();
@@ -14,4 +15,5 @@ public interface EngineService{
   public void stop();
   public void setHeroesCommand(User.COMMAND c);
   public void releaseHeroesCommand(User.COMMAND c);
+  public void spawnLaser(Position heroePosition);
 }

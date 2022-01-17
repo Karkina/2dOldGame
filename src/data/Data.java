@@ -30,7 +30,7 @@ public class Data implements DataService{
   private double heroesWidth,heroesHeight,phantomWidth,phantomHeight,pilierWidth,pilierHeight;
   private Sound.SOUND sound;
   private int maxHorizontal, maxVertical,minHorizontal,minVertical;
-
+  private int round;
   public Data(){}
 
   @Override
@@ -41,6 +41,7 @@ public class Data implements DataService{
     phantoms5PV = new ArrayList<PhantomService>();
     stepNumber = 0;
     score = 0;
+    round =1;
     maxHorizontal = 1180;
     minHorizontal = 50;
     maxVertical =500;
@@ -55,6 +56,12 @@ public class Data implements DataService{
     sound = Sound.SOUND.None;
   }
 
+
+  @Override
+  public int getRound(){ return this.round; }
+
+  @Override
+  public void setRound(int newRound){  this.round=newRound ; }
   @Override
   public Position getHeroesPosition(){ return heroesPosition; }
   

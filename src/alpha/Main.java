@@ -47,7 +47,7 @@ public class Main extends Application{
   private static EngineService engine;
   private static ViewerService viewer;
   private static AnimationTimer timer;
-  private int round;
+
 
   //---EXECUTABLE---//
   public static void main(String[] args) {
@@ -69,7 +69,6 @@ public class Main extends Application{
   @Override public void start(Stage stage) {
 
     final Scene scene = new Scene(((Viewer)viewer).getPanel(stage));
-    round =1;
     scene.setFill(Color.BLACK);
     scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
       @Override
@@ -123,8 +122,7 @@ public class Main extends Application{
         if (!((Viewer) viewer).getPause()) {
           System.out.println("Hello BUTTON2");
           ((Viewer) viewer).setPause(true);
-          engine.start();
-
+          engine.resume();
         }
 
         if (data.getScore() < 0) {
@@ -133,14 +131,15 @@ public class Main extends Application{
           engine.stop();
           super.stop();
         }
-        switch (round) {
+        switch (data.getRound()) {
           case 1:
             if (data.getScore() > HardCodedParameters.pointRoundWin1) {
               System.out.println(data.getScore());
               ((Viewer) viewer).getPopUpWin().show(stage);
+
               engine.stop();
               data.setScore(0);
-              round++;
+              data.setRound(2);
 
 
             }
@@ -150,7 +149,8 @@ public class Main extends Application{
               System.out.println(data.getScore());
               ((Viewer) viewer).getPopUpWin().show(stage);
               engine.stop();
-              round++;
+              data.setScore(0);
+              data.setRound(3);
 
             }
             break;

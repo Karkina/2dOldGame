@@ -142,6 +142,11 @@ public class Engine implements EngineService, RequireDataService{
   public void stop(){
     engineClock.cancel();
   }
+  @Override
+  public void resume() {
+    this.engineClock = new Timer();
+    this.start();
+  }
 
 
   @Override

@@ -190,7 +190,7 @@ public class Viewer implements ViewerService, RequireReadService{
     
     Text greets = new Text(-0.1*shrink*defaultMainHeight+.5*shrink*defaultMainWidth,
                            -0.1*shrink*defaultMainWidth+shrink*defaultMainHeight,
-                           "Round 1");
+                           "Round"+data.getRound());
     greets.setFont(new Font(.05*shrink*defaultMainHeight));
     greets.setFill(Color.WHITE);
     
@@ -242,7 +242,7 @@ public class Viewer implements ViewerService, RequireReadService{
 
     for (int i=0; i<phantoms5PV.size();i++) {
       p5PV = phantoms5PV.get(i);
-      double radius = .5 * Math.min(shrink * data.getPhantomWidth(), shrink * data.getPhantomHeight());
+      double radius = .5 * Math.min(shrink * data.getPhantomWidth()*1.5, shrink * data.getPhantomHeight()*1.5);
       Circle phantomAvatar = new Circle(radius);
       Image imgCreature = new Image("file:src/images/extra5PV.png");
       phantomAvatar.setFill(new ImagePattern(imgCreature));

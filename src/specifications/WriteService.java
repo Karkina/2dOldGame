@@ -24,4 +24,5 @@ public interface WriteService {
   public void setScore(int scoreAmount);
   public void addScore(int score);
   public void removeScore(int score);
-}
+  public void setRound(int score);}
+

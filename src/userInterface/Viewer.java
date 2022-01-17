@@ -34,6 +34,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.Popup;
+import javafx.geometry.HPos;
+import javafx.scene.control.ContentDisplay;
 
 import java.util.ArrayList;
 
@@ -76,10 +78,15 @@ public class Viewer implements ViewerService, RequireReadService{
 
 
     popupWin =new Popup();
+    Label label = new Label("My Label");
+    label.setLayoutX(300);
+    label.setLayoutY(300);
+
     Image imgGameWin = new Image("file:src/images/win.jpg");
     button = new Button(" Round 2");
     ImageView imageViewWin = new ImageView(imgGameWin);
     popupWin.getContent().add(imageViewWin);
+    popupWin.getContent().add(label);
     popupWin.getContent().add(button);
 
     EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {

@@ -47,6 +47,7 @@ public class Main extends Application{
   private static EngineService engine;
   private static ViewerService viewer;
   private static AnimationTimer timer;
+  private MediaPlayer music;
 
 
   //---EXECUTABLE---//
@@ -69,6 +70,7 @@ public class Main extends Application{
   @Override public void start(Stage stage) {
 
     final Scene scene = new Scene(((Viewer)viewer).getPanel(stage));
+    musicBackground();
     scene.setFill(Color.BLACK);
     scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
       @Override
@@ -157,7 +159,7 @@ public class Main extends Application{
         }
 
         scene.setRoot(((Viewer) viewer).getPanel(stage));
-        if (!((Viewer) viewer).getPause()) {
+        if (((Viewer) viewer).getPause()) {
           switch (data.getSoundEffect()) {
             case PhantomDestroyed:
               new MediaPlayer(new Media(getHostServices().getDocumentBase() + "src/sound/crunchy.wav")).play();
@@ -176,6 +178,11 @@ public class Main extends Application{
     };
     timer.start();
 
+  }
+  private void musicBackground(){
+    Media file = new Media(getHostServices().getDocumentBase() + "src/sound/spaceGame.mp3");
+    music = new MediaPlayer(file);
+    music.play();
   }
   //---ARGUMENTS---//
   private static void readArguments(String[] args){

@@ -70,7 +70,7 @@ public class Viewer implements ViewerService, RequireReadService{
     xModifier=0;
     yModifier=0;
     popupOver = new Popup();
-    Image imgGameOVer = new Image("file:src/images/gameOver2.png");
+    Image imgGameOVer = new Image("file:src/images/gameOverImage.png");
     ImageView imageView = new ImageView(imgGameOVer);
     popupOver.getContent().add(imageView);
     imageView.setFitHeight(400);
@@ -204,7 +204,7 @@ public class Viewer implements ViewerService, RequireReadService{
     
     Text greets = new Text(-0.1*shrink*defaultMainHeight+.5*shrink*defaultMainWidth,
                            -0.1*shrink*defaultMainWidth+shrink*defaultMainHeight,
-                           "Round"+data.getRound());
+                           "Round "+data.getRound());
     greets.setFont(new Font(.05*shrink*defaultMainHeight));
     greets.setFill(Color.WHITE);
     

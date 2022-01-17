@@ -156,6 +156,16 @@ public class Main extends Application{
 
             }
             break;
+          case 3:
+            if (data.getScore() > HardCodedParameters.pointRoundWin2) {
+              System.out.println(data.getScore());
+              ((Viewer) viewer).getPopUpWin().show(stage);
+              engine.stop();
+              data.setScore(0);
+              data.setRound(4);
+
+            }
+            break;
         }
 
         scene.setRoot(((Viewer) viewer).getPanel(stage));

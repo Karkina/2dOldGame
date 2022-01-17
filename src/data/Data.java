@@ -93,7 +93,11 @@ public class Data implements DataService{
   public ArrayList<PhantomService> getPhantoms(){ return phantoms; }
   @Override
   public ArrayList<PhantomService> getPhantoms5PV(){ return phantoms5PV; }
+  @Override
+  public void clearPhantoms(){  phantoms=new ArrayList<PhantomService>(); }
 
+  @Override
+  public void clearPhantoms5PV(){  phantoms5PV=new ArrayList<PhantomService>(); }
 
   @Override
   public ArrayList<PilierService> getPiliers(){return piliers;}

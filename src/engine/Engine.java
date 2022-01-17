@@ -70,9 +70,9 @@ public class Engine implements EngineService, RequireDataService{
       public void run() {
         //System.out.println("Game step #"+data.getStepNumber()+": checked.");
         
-        if (gen.nextInt(80)<3) spawnPhantom();
+        if (gen.nextInt(HardCodedParameters.rateSpawnPhantom/ data.getRound())<3) spawnPhantom();
 
-        if (gen.nextInt(200)<3) spawnPhantom5PV();
+        if (gen.nextInt(HardCodedParameters.rateSpawnPhantom5PV/ data.getRound())<3) spawnPhantom5PV();
 
         updateSpeedHeroes();
         updateCommandHeroes();
@@ -116,7 +116,7 @@ public class Engine implements EngineService, RequireDataService{
         for (PilierService p : data.getPiliers()) {
 
           if (collisionHeroesPilliersTest(p) && timerHitElectro <0){
-            int xElec= gen.nextInt(500);
+            int xElec= gen.nextInt(1000);
             int yElec= gen.nextInt(500);
             data.setSoundEffect(Sound.SOUND.ShipElectrocut);
             System.out.println("Aie le pilier");
@@ -145,6 +145,8 @@ public class Engine implements EngineService, RequireDataService{
   @Override
   public void resume() {
     this.engineClock = new Timer();
+    data.clearPhantoms5PV();
+    data.clearPhantoms();
     this.start();
   }
 

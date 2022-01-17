@@ -28,7 +28,9 @@ public class HardCodedParameters {
                           displayZoneYZoomStep = 5,
                           pointRoundWin1 = 50,
                           pointRoundWin2 = 70,
-                          pointRoundWin3 = 90;
+                          pointRoundWin3 = 90,
+                          rateSpawnPhantom = 30,
+                          rateSpawnPhantom5PV = 90;
   public static final double displayZoneAlphaZoomStep = 0.98;
 
   //---MISCELLANOUS---//

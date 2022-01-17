@@ -52,6 +52,7 @@ public class Viewer implements ViewerService, RequireReadService{
   private  Popup popupOver,popupWin;
   private Button button;
   private boolean pause;
+  private int objectif;
   public Viewer(){}
   
   @Override
@@ -170,8 +171,14 @@ public class Viewer implements ViewerService, RequireReadService{
   }
   @Override
   public Parent getPanel(Stage stage){
-
-
+    switch(data.getRound()){
+      case 1: objectif = HardCodedParameters.pointRoundWin1;
+      break;
+      case 2: objectif = HardCodedParameters.pointRoundWin2;
+      break;
+      case 3: objectif = HardCodedParameters.pointRoundWin3;
+      break;
+    }
     shrink=Math.min(xShrink,yShrink);
     xModifier=.01*shrink*defaultMainHeight;
     yModifier=.01*shrink*defaultMainHeight;
@@ -196,9 +203,11 @@ public class Viewer implements ViewerService, RequireReadService{
     
     Text score = new Text(-0.1*shrink*defaultMainHeight+.5*shrink*defaultMainWidth,
                            -0.05*shrink*defaultMainWidth+shrink*defaultMainHeight,
-                           "Score: "+data.getScore());
+                           "Score: "+data.getScore()+"/"+objectif);
     score.setFont(new Font(.05*shrink*defaultMainHeight));
     score.setFill(Color.WHITE);
+
+
     
     //int index=heroesAvatarViewportIndex/spriteSlowDownRate;
     int index =0;
